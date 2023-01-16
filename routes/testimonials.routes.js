@@ -12,23 +12,38 @@ router.route('/testimonials').get((req, res) => {
 });
 
 router.route('/testimonials/:id').get((req, res) => {
+  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
+  if (!testimonial) {
+    return res.status(404).json({ message: 'Testimonial not found...' });
+  }
+
   res.json(db.testimonials.find((elem) => elem.id === req.params.id));
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
-  db.testimonials.filter((elem) => elem.id !== req.params.id);
+  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
+  if (!testimonial) {
+    return res.status(404).json({ message: 'Testimonial not found...' });
+  }
+
+  db.testimonials = db.testimonials.filter((elem) => elem.id !== req.params.id);
   res.json({ message: 'OK' });
 });
 
 router.route('/testimonials/:id').put((req, res) => {
-  db.testimonials.map((elem) =>
+  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
+  if (!testimonial) {
+    return res.status(404).json({ message: 'Testimonial not found...' });
+  }
+
+  db.testimonials = db.testimonials.map((elem) =>
     elem.id === req.params.id ? { ...elem, ...req.body } : elem
   );
   res.json({ message: 'OK' });
 });
 
-router.route('/testimonials/:id').post((req, res) => {
-  [...db.testimonials, { id: uuidv4(), ...req.body }];
+router.route('/testimonials').post((req, res) => {
+  db.testimonials = [...db.testimonials, { id: uuidv4(), ...req.body }];
   res.json({ message: 'OK' });
 });
 

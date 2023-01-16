@@ -8,23 +8,38 @@ router.route('/concerts').get((req, res) => {
 });
 
 router.route('/concerts/:id').get((req, res) => {
+  const concert = db.concerts.find((elem) => elem.id === req.params.id);
+  if (!concert) {
+    return res.status(404).json({ message: 'Concert not found...' });
+  }
+
   res.json(db.concerts.find((elem) => elem.id === req.params.id));
 });
 
 router.route('/concerts/:id').delete((req, res) => {
-  db.concerts.filter((elem) => elem.id !== req.params.id);
+  const concert = db.concerts.find((elem) => elem.id === req.params.id);
+  if (!concert) {
+    return res.status(404).json({ message: 'Concert not found...' });
+  }
+
+  db.concerts = db.concerts.filter((elem) => elem.id !== req.params.id);
   res.json({ message: 'OK' });
 });
 
 router.route('/concerts/:id').put((req, res) => {
-  db.concerts.map((elem) =>
+  const concert = db.concerts.find((elem) => elem.id === req.params.id);
+  if (!concert) {
+    return res.status(404).json({ message: 'Concert not found...' });
+  }
+
+  db.concerts = db.concerts.map((elem) =>
     elem.id === req.params.id ? { ...elem, ...req.body } : elem
   );
   res.json({ message: 'OK' });
 });
 
-router.route('/concerts/:id').post((req, res) => {
-  [...db.concerts, { id: uuidv4(), ...req.body }];
+router.route('/concerts').post((req, res) => {
+  db.concerts = [...db.concerts, { id: uuidv4(), ...req.body }];
   res.json({ message: 'OK' });
 });
 

@@ -8,23 +8,38 @@ router.route('/seats').get((req, res) => {
 });
 
 router.route('/seats/:id').get((req, res) => {
+  const seat = db.seats.find((elem) => elem.id === req.params.id);
+  if (!seat) {
+    return res.status(404).json({ message: 'Seat not found...' });
+  }
+
   res.json(db.seats.find((elem) => elem.id === req.params.id));
 });
 
 router.route('/seats/:id').delete((req, res) => {
-  db.seats.filter((elem) => elem.id !== req.params.id);
+  const seat = db.seats.find((elem) => elem.id === req.params.id);
+  if (!seat) {
+    return res.status(404).json({ message: 'Seat not found...' });
+  }
+
+  db.seats = db.seats.filter((elem) => elem.id !== req.params.id);
   res.json({ message: 'OK' });
 });
 
 router.route('/seats/:id').put((req, res) => {
-  db.seats.map((elem) =>
+  const seat = db.seats.find((elem) => elem.id === req.params.id);
+  if (!seat) {
+    return res.status(404).json({ message: 'Seat not found...' });
+  }
+
+  db.seats = db.seats.map((elem) =>
     elem.id === req.params.id ? { ...elem, ...req.body } : elem
   );
   res.json({ message: 'OK' });
 });
 
-router.route('/seats/:id').post((req, res) => {
-  [...db.seats, { id: uuidv4(), ...req.body }];
+router.route('/seats').post((req, res) => {
+  db.seats = [...db.seats, { id: uuidv4(), ...req.body }];
   res.json({ message: 'OK' });
 });
 
