@@ -8,8 +8,10 @@ router.route('/concerts').get((req, res) => {
 });
 
 router.route('/concerts/:id').get((req, res) => {
-  const concert = db.concerts.find((elem) => elem.id === req.params.id);
-  if (!concert) {
+  const concertIndex = db.concerts.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (concertIndex === -1) {
     return res.status(404).json({ message: 'Concert not found...' });
   }
 
@@ -17,8 +19,10 @@ router.route('/concerts/:id').get((req, res) => {
 });
 
 router.route('/concerts/:id').delete((req, res) => {
-  const concert = db.concerts.find((elem) => elem.id === req.params.id);
-  if (!concert) {
+  const concertIndex = db.concerts.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (concertIndex === -1) {
     return res.status(404).json({ message: 'Concert not found...' });
   }
 
@@ -27,14 +31,15 @@ router.route('/concerts/:id').delete((req, res) => {
 });
 
 router.route('/concerts/:id').put((req, res) => {
-  const concert = db.concerts.find((elem) => elem.id === req.params.id);
-  if (!concert) {
+  const concertIndex = db.concerts.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (concertIndex === -1) {
     return res.status(404).json({ message: 'Concert not found...' });
   }
 
-  db.concerts = db.concerts.map((elem) =>
-    elem.id === req.params.id ? { ...elem, ...req.body } : elem
-  );
+  db.concerts[concertIndex] = { ...db.concerts[concertIndex], ...req.body };
+
   res.json({ message: 'OK' });
 });
 

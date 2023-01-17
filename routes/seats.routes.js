@@ -8,8 +8,8 @@ router.route('/seats').get((req, res) => {
 });
 
 router.route('/seats/:id').get((req, res) => {
-  const seat = db.seats.find((elem) => elem.id === req.params.id);
-  if (!seat) {
+  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
+  if (seatIndex === -1) {
     return res.status(404).json({ message: 'Seat not found...' });
   }
 
@@ -17,8 +17,8 @@ router.route('/seats/:id').get((req, res) => {
 });
 
 router.route('/seats/:id').delete((req, res) => {
-  const seat = db.seats.find((elem) => elem.id === req.params.id);
-  if (!seat) {
+  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
+  if (seatIndex === -1) {
     return res.status(404).json({ message: 'Seat not found...' });
   }
 
@@ -27,8 +27,8 @@ router.route('/seats/:id').delete((req, res) => {
 });
 
 router.route('/seats/:id').put((req, res) => {
-  const seat = db.seats.find((elem) => elem.id === req.params.id);
-  if (!seat) {
+  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
+  if (seatIndex === -1) {
     return res.status(404).json({ message: 'Seat not found...' });
   }
 

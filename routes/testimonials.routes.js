@@ -12,8 +12,10 @@ router.route('/testimonials').get((req, res) => {
 });
 
 router.route('/testimonials/:id').get((req, res) => {
-  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
-  if (!testimonial) {
+  const testimonialIndex = db.testimonials.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (testimonialIndex === -1) {
     return res.status(404).json({ message: 'Testimonial not found...' });
   }
 
@@ -21,8 +23,10 @@ router.route('/testimonials/:id').get((req, res) => {
 });
 
 router.route('/testimonials/:id').delete((req, res) => {
-  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
-  if (!testimonial) {
+  const testimonialIndex = db.testimonials.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (testimonialIndex === -1) {
     return res.status(404).json({ message: 'Testimonial not found...' });
   }
 
@@ -31,8 +35,10 @@ router.route('/testimonials/:id').delete((req, res) => {
 });
 
 router.route('/testimonials/:id').put((req, res) => {
-  const testimonial = db.testimonials.find((elem) => elem.id === req.params.id);
-  if (!testimonial) {
+  const testimonialIndex = db.testimonials.findIndex(
+    (elem) => elem.id === req.params.id
+  );
+  if (testimonialIndex === -1) {
     return res.status(404).json({ message: 'Testimonial not found...' });
   }
 
