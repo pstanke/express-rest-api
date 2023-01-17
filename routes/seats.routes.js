@@ -39,6 +39,12 @@ router.route('/seats/:id').put((req, res) => {
 });
 
 router.route('/seats').post((req, res) => {
+  const takenSeat = db.seats.find(
+    (elem) => elem.day == req.body.day && elem.seat == req.body.seat
+  );
+  if (takenSeat) {
+    return res.status(404).json({ message: 'The slot is already taken...' });
+  }
   db.seats = [...db.seats, { id: uuidv4(), ...req.body }];
   res.json({ message: 'OK' });
 });
