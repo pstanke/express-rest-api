@@ -46,7 +46,9 @@ router.route('/seats').post((req, res) => {
     return res.status(404).json({ message: 'The slot is already taken...' });
   }
   db.seats = [...db.seats, { id: uuidv4(), ...req.body }];
-  res.json({ message: 'OK' });
+
+  res.json(db.seats);
+  req.io.sockets.emit('seatsUpdated', db.seats);
 });
 
 module.exports = router;
