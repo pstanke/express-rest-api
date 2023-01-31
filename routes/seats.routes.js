@@ -1,54 +1,16 @@
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
-const db = require('./../db');
 
-router.route('/seats').get((req, res) => {
-  res.json(db.seats);
-});
+const SeatController = require('../controllers/seats.controller');
 
-router.route('/seats/:id').get((req, res) => {
-  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
-  if (seatIndex === -1) {
-    return res.status(404).json({ message: 'Seat not found...' });
-  }
+router.get('/seats', SeatController.getAll);
 
-  res.json(db.seats.find((elem) => elem.id === req.params.id));
-});
+router.get('/seats/:id', SeatController.getById);
 
-router.route('/seats/:id').delete((req, res) => {
-  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
-  if (seatIndex === -1) {
-    return res.status(404).json({ message: 'Seat not found...' });
-  }
+router.post('/seats', SeatController.create);
 
-  db.seats = db.seats.filter((elem) => elem.id !== req.params.id);
-  res.json({ message: 'OK' });
-});
+router.put('/seats/:id', SeatController.edit);
 
-router.route('/seats/:id').put((req, res) => {
-  const seatIndex = db.seats.findIndex((elem) => elem.id === req.params.id);
-  if (seatIndex === -1) {
-    return res.status(404).json({ message: 'Seat not found...' });
-  }
-
-  db.seats = db.seats.map((elem) =>
-    elem.id === req.params.id ? { ...elem, ...req.body } : elem
-  );
-  res.json({ message: 'OK' });
-});
-
-router.route('/seats').post((req, res) => {
-  const takenSeat = db.seats.find(
-    (elem) => elem.day == req.body.day && elem.seat == req.body.seat
-  );
-  if (takenSeat) {
-    return res.status(404).json({ message: 'The slot is already taken...' });
-  }
-  db.seats = [...db.seats, { id: uuidv4(), ...req.body }];
-
-  res.json(db.seats);
-  req.io.sockets.emit('seatsUpdated', db.seats);
-});
+router.delete('/seats/:id', SeatController.delete);
 
 module.exports = router;

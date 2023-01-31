@@ -1,56 +1,18 @@
 const express = require('express');
-const { v4: uuidv4 } = require('uuid');
 const router = express.Router();
-const db = require('./../db');
 
-router.route('/testimonials/random').get((req, res) => {
-  res.json(db.testimonials[Math.floor(Math.random() * db.testimonials.length)]);
-});
+const TestimonialController = require('../controllers/testimonials.controller');
 
-router.route('/testimonials').get((req, res) => {
-  res.json(db.testimonials);
-});
+router.get('/testimonials', TestimonialController.getAll);
 
-router.route('/testimonials/:id').get((req, res) => {
-  const testimonialIndex = db.testimonials.findIndex(
-    (elem) => elem.id === req.params.id
-  );
-  if (testimonialIndex === -1) {
-    return res.status(404).json({ message: 'Testimonial not found...' });
-  }
+router.get('/testimonials/random', TestimonialController.getRandom);
 
-  res.json(db.testimonials.find((elem) => elem.id === req.params.id));
-});
+router.get('/testimonials/:id', TestimonialController.getById);
 
-router.route('/testimonials/:id').delete((req, res) => {
-  const testimonialIndex = db.testimonials.findIndex(
-    (elem) => elem.id === req.params.id
-  );
-  if (testimonialIndex === -1) {
-    return res.status(404).json({ message: 'Testimonial not found...' });
-  }
+router.post('/testimonials', TestimonialController.create);
 
-  db.testimonials = db.testimonials.filter((elem) => elem.id !== req.params.id);
-  res.json({ message: 'OK' });
-});
+router.put('/testimonials/:id', TestimonialController.edit);
 
-router.route('/testimonials/:id').put((req, res) => {
-  const testimonialIndex = db.testimonials.findIndex(
-    (elem) => elem.id === req.params.id
-  );
-  if (testimonialIndex === -1) {
-    return res.status(404).json({ message: 'Testimonial not found...' });
-  }
-
-  db.testimonials = db.testimonials.map((elem) =>
-    elem.id === req.params.id ? { ...elem, ...req.body } : elem
-  );
-  res.json({ message: 'OK' });
-});
-
-router.route('/testimonials').post((req, res) => {
-  db.testimonials = [...db.testimonials, { id: uuidv4(), ...req.body }];
-  res.json({ message: 'OK' });
-});
+router.delete('/testimonials/:id', TestimonialController.delete);
 
 module.exports = router;

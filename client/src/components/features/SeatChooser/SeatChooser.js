@@ -4,9 +4,9 @@ import { Button, Progress, Alert } from 'reactstrap';
 import io from 'socket.io-client';
 import {
   getSeats,
-  loadSeats,
   getRequests,
   loadSeatsRequest,
+  addSeat,
 } from '../../../redux/seatsRedux';
 import './SeatChooser.scss';
 
@@ -21,8 +21,8 @@ const SeatChooser = ({ chosenDay, chosenSeat, updateSeat }) => {
       process.env.NODE_ENV === 'production' ? '' : 'ws://localhost:8000',
       { transports: ['websocket'] }
     );
-    socket.on('seatsUpdated', (seats) => {
-      dispatch(loadSeats(seats));
+    socket.on('seatsUpdated', (seat) => {
+      dispatch(addSeat(seat));
     });
   }, [dispatch]);
 
