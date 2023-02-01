@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
-const Client = require('./client.model');
 
 const seatSchema = new mongoose.Schema({
   day: { type: Number, required: true },
   seat: { type: Number, required: true },
-  client: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Client',
-    required: true,
-  },
+  client: { type: String, required: true },
   email: { type: String, required: true },
 });
 

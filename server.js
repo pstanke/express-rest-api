@@ -34,7 +34,8 @@ app.use((req, res) => {
 });
 
 mongoose.connect(
-  'mongodb+srv://Admin:admin1234@cluster0.c6cj6je.mongodb.net/NewWaveDB?retryWrites=true&w=majority'
+  'mongodb+srv://Admin:admin1234@cluster0.c6cj6je.mongodb.net/NewWaveDB?retryWrites=true&w=majority',
+  { useUnifiedTopology: true }
 );
 const db = mongoose.connection;
 

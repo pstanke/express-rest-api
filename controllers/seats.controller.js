@@ -2,7 +2,7 @@ const Seat = require('../models/seat.model');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Seat.find().populate('client'));
+    res.json(await Seat.find());
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -10,7 +10,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const seat = await Seat.findById(req.params.id).populate('client');
+    const seat = await Seat.findById(req.params.id);
     if (!seat) res.status(404).json({ message: 'Seat not found' });
     else res.json(seat);
   } catch (err) {
