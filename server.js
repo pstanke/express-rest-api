@@ -33,9 +33,9 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found...' });
 });
 
-mongoose.connect('mongodb://localhost:27017/NewWaveDB', {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  'mongodb+srv://Admin:admin1234@cluster0.c6cj6je.mongodb.net/NewWaveDB?retryWrites=true&w=majority'
+);
 const db = mongoose.connection;
 
 db.once('open', () => {
