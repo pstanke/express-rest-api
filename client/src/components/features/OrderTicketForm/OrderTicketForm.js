@@ -26,7 +26,7 @@ const OrderTicketForm = () => {
   console.log(requests);
 
   const [order, setOrder] = useState({
-    client: '',
+    clientName: '',
     email: '',
     day: 1,
     seat: '',
@@ -51,11 +51,11 @@ const OrderTicketForm = () => {
   const submitForm = async (e) => {
     e.preventDefault();
 
-    if (order.client && order.email && order.day && order.seat) {
+    if (order.clientName && order.email && order.day && order.seat) {
       try {
         await dispatch(addSeatRequest(order));
         setOrder({
-          client: '',
+          clientName: '',
           email: '',
           day: 1,
           seat: '',
@@ -96,8 +96,8 @@ const OrderTicketForm = () => {
             <Label for='clientEmail'>Name</Label>
             <Input
               type='text'
-              value={order.client}
-              name='client'
+              value={order.clientName}
+              name='clientName'
               onChange={updateTextField}
               id='clientName'
               placeholder='John Doe'
