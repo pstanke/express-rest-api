@@ -21,12 +21,12 @@ exports.getById = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const { day, seat, clientName, email } = req.body;
+    const { day, seat, name, email } = req.body;
 
-    let client = await Client.findOne({ email: email });
+    let client = await Client.findOne({ email });
 
     if (!client) {
-      client = new Client({ name: clientName, email: email });
+      client = new Client({ name, email });
       await client.save();
     }
 
@@ -45,7 +45,7 @@ exports.create = async (req, res) => {
 };
 
 exports.edit = async (req, res) => {
-  const { day, seat, clientName, email } = req.body;
+  const { day, seat, name, email } = req.body;
 
   try {
     const existingSeat = await Seat.findById(req.params.id).populate('client');
@@ -53,7 +53,7 @@ exports.edit = async (req, res) => {
       existingSeat.day = day;
       existingSeat.seat = seat;
 
-      existingSeat.client.name = clientName;
+      existingSeat.client.name = name;
       existingSeat.client.email = email;
 
       await existingSeat.client.save();
