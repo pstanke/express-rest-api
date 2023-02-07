@@ -38,6 +38,7 @@ exports.create = async (req, res) => {
     await newSeat.save();
 
     req.io.emit('seatsUpdated', newSeat);
+
     res.json({ message: 'OK' });
   } catch (err) {
     res.status(500).json({ message: err });
