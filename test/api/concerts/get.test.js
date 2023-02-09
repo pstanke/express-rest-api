@@ -17,7 +17,6 @@ describe('GET /api/concerts', async () => {
       price: 25,
       day: 1,
       image: '/img/uploads/1fsd324fsdg.jpg',
-      freeSeats: ' ',
     });
     await testConcOne.save();
 
@@ -28,7 +27,6 @@ describe('GET /api/concerts', async () => {
       price: 45,
       day: 2,
       image: '/img/uploads/1fsd324fsdg.jpg',
-      freeSeats: ' ',
     });
     await testConcTwo.save();
 
