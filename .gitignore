@@ -1,2 +1,6 @@
 #depediences
 /node_modules
+
+
+.env
+.snyk
