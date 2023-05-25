@@ -17,7 +17,7 @@
     "nodemon": "^2.0.20",
     "onchange": "6.1.0",
     "snyk": "^1.1100.0",
-    "socket.io": "4.5.1",
+    "socket.io": "4.5.2",
     "uuid": "^9.0.0"
   },
   "scripts": {
