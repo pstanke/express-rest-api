@@ -13,7 +13,7 @@
     "mocha": "10.1.0",
     "mongo-sanitize": "1.0.1",
     "mongodb": "3.3.2",
-    "mongoose": "5.13.15",
+    "mongoose": "5.13.20",
     "nodemon": "^2.0.20",
     "onchange": "6.1.0",
     "snyk": "^1.1100.0",
