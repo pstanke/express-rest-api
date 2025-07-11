@@ -10,14 +10,14 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "helmet": "3.21.1",
-    "mocha": "10.1.0",
+    "mocha": "11.0.1",
     "mongo-sanitize": "1.0.1",
     "mongodb": "3.3.2",
     "mongoose": "5.13.15",
     "nodemon": "^2.0.20",
     "onchange": "6.1.0",
-    "snyk": "^1.1100.0",
-    "socket.io": "4.5.1",
+    "snyk": "^1.1297.3",
+    "socket.io": "4.8.0",
     "uuid": "^9.0.0"
   },
   "scripts": {
